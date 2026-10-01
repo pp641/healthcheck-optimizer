@@ -1,0 +1,52 @@
+# --- Build output -----------------------------------------------------------
+# Agent binaries from `make agent-darwin` / `make agent-all`
+/bin/
+
+# Go
+*.exe
+*.test
+*.out
+coverage.*
+/agent/tidyfleet
+/server/tidyfleet-server
+
+# The cleaner app is built (`make cleaner-ui`) and embedded into the agent
+# binary from here. Keep the placeholder so `go:embed` always finds a file.
+/agent/internal/ui/static/*
+!/agent/internal/ui/static/.keep
+
+# --- Node / Next.js (dashboard/ and cleaner-ui/) ------------------------------
+node_modules/
+.next/
+/cleaner-ui/out/
+next-env.d.ts
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# --- Local secrets and settings ----------------------------------------------
+# Dashboard login created by `make try` (contains a password)
+.tidyfleet-dev
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# --- Logs and local data -----------------------------------------------------
+*.log
+logs/
+
+# --- Editors and OS ----------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+*~
+
+dashboard/node_modules

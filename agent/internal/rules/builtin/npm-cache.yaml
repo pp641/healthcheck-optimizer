@@ -1,0 +1,15 @@
+id: npm-cache
+name: npm cache
+ecosystem: node
+description: npm's content-addressable download cache.
+kind: path
+match:
+  paths:
+    darwin: ["~/.npm/_cacache"]
+    linux: ["~/.npm/_cacache"]
+    windows: ["%LOCALAPPDATA%/npm-cache/_cacache"]
+clean:
+  method: command
+  commands:
+    - [npm, cache, clean, --force]
+  fallback: trash

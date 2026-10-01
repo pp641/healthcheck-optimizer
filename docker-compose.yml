@@ -1,0 +1,51 @@
+# Local stack: Postgres, the Go API and the Next.js dashboard.
+#   docker compose up -d --build
+#   docker compose exec server tidyfleet-server create-org -name "Acme" -admin-email you@acme.test
+# Dashboard: http://localhost:3000   API (agents enroll here): http://localhost:8080
+# Ports can be changed with TIDYFLEET_DASHBOARD_PORT and TIDYFLEET_API_PORT.
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: tidyfleet
+      POSTGRES_PASSWORD: tidyfleet
+      POSTGRES_DB: tidyfleet
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tidyfleet -d tidyfleet"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  server:
+    build: ./server
+    environment:
+      DATABASE_URL: postgres://tidyfleet:tidyfleet@db:5432/tidyfleet?sslmode=disable
+      # Newest major OS versions, for "N versions behind" (the fleet's newest is used otherwise).
+      TIDYFLEET_LATEST_OS: macos=26,windows=10
+      TIDYFLEET_RETENTION_DAYS: "365"
+    ports:
+      - "${TIDYFLEET_API_PORT:-8080}:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  dashboard:
+    build: ./dashboard
+    environment:
+      API_URL: http://server:8080
+      # Shown in the enrollment command on the Settings page.
+      PUBLIC_SERVER_URL: http://localhost:${TIDYFLEET_API_PORT:-8080}
+      # Local http only: lets Safari keep the session cookie. Remove behind HTTPS.
+      INSECURE_COOKIES: "1"
+    ports:
+      - "${TIDYFLEET_DASHBOARD_PORT:-3000}:3000"
+    depends_on:
+      server:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  db-data:

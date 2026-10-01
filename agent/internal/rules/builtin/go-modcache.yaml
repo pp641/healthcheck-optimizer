@@ -1,0 +1,12 @@
+id: go-modcache
+name: Go module cache
+ecosystem: go
+description: Downloaded Go modules. Re-downloaded on next build.
+kind: path
+match:
+  path_command: [go, env, GOMODCACHE]
+  requires_command: go
+clean:
+  method: command
+  commands:
+    - [go, clean, -modcache]

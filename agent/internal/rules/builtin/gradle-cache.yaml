@@ -1,0 +1,10 @@
+id: gradle-cache
+name: Gradle caches
+ecosystem: jvm
+description: Gradle dependency and build caches. Re-downloaded on next build.
+kind: path
+match:
+  paths:
+    all: ["~/.gradle/caches"]
+clean:
+  method: trash

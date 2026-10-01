@@ -1,0 +1,13 @@
+id: docker
+name: Docker images and build cache
+ecosystem: docker
+description: Unused images and build cache. Containers and volumes are never touched.
+kind: probe
+match:
+  probe: docker
+  requires_command: docker
+clean:
+  method: command
+  commands:
+    - [docker, image, prune, --all, --force]
+    - [docker, builder, prune, --force]

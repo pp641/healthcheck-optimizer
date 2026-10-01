@@ -1,0 +1,15 @@
+id: pnpm-store
+name: pnpm store
+ecosystem: node
+description: pnpm's global package store. `pnpm store prune` only removes unreferenced packages, so it may free less than shown.
+kind: path
+match:
+  paths:
+    darwin: ["~/Library/pnpm/store"]
+    linux: ["~/.local/share/pnpm/store"]
+    windows: ["%LOCALAPPDATA%/pnpm/store"]
+  requires_command: pnpm
+clean:
+  method: command
+  commands:
+    - [pnpm, store, prune]

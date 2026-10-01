@@ -1,0 +1,11 @@
+id: next-build
+name: Next.js .next/
+ecosystem: node
+description: Next.js build and dev cache. Recreated by `next build` / `next dev`.
+kind: project
+stale_check: true
+match:
+  dir_names: [.next]
+  sibling_any: [package.json]
+clean:
+  method: trash

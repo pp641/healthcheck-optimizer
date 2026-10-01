@@ -1,0 +1,13 @@
+id: ios-simulators
+name: Unavailable iOS simulators
+ecosystem: xcode
+description: Simulators for runtimes that are no longer installed.
+kind: probe
+os: [darwin]
+match:
+  probe: simctl-unavailable
+  requires_command: xcrun
+clean:
+  method: command
+  commands:
+    - [xcrun, simctl, delete, unavailable]

@@ -1,0 +1,11 @@
+id: node-modules
+name: node_modules
+ecosystem: node
+description: Installed npm/yarn/pnpm dependencies. Recreated by `npm install`.
+kind: project
+stale_check: true
+match:
+  dir_names: [node_modules]
+  sibling_any: [package.json]
+clean:
+  method: trash

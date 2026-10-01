@@ -1,0 +1,12 @@
+id: js-build-output
+name: JS build/ and dist/
+ecosystem: node
+description: Bundler output in a JavaScript project. Only eligible when gitignored.
+kind: project
+stale_check: true
+require_gitignored: true
+match:
+  dir_names: [build, dist]
+  sibling_any: [package.json]
+clean:
+  method: trash

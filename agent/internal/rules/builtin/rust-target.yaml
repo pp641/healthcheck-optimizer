@@ -1,0 +1,11 @@
+id: rust-target
+name: Rust target/
+ecosystem: rust
+description: Cargo build output. Recreated by `cargo build`.
+kind: project
+stale_check: true
+match:
+  dir_names: [target]
+  sibling_any: [Cargo.toml]
+clean:
+  method: trash

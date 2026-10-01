@@ -1,0 +1,11 @@
+id: xcode-deriveddata
+name: Xcode DerivedData
+ecosystem: xcode
+description: Xcode intermediate build products and indexes. Rebuilt on next build.
+kind: path
+os: [darwin]
+match:
+  paths:
+    darwin: ["~/Library/Developer/Xcode/DerivedData"]
+clean:
+  method: trash

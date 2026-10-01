@@ -1,0 +1,15 @@
+id: pip-cache
+name: pip cache
+ecosystem: python
+description: pip's HTTP and wheel cache.
+kind: path
+match:
+  paths:
+    darwin: ["~/Library/Caches/pip"]
+    linux: ["~/.cache/pip"]
+    windows: ["%LOCALAPPDATA%/pip/Cache"]
+clean:
+  method: command
+  commands:
+    - [pip3, cache, purge]
+  fallback: trash

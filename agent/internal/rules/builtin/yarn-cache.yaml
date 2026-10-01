@@ -1,0 +1,15 @@
+id: yarn-cache
+name: Yarn cache
+ecosystem: node
+description: Yarn v1 global cache.
+kind: path
+match:
+  paths:
+    darwin: ["~/Library/Caches/Yarn"]
+    linux: ["~/.cache/yarn"]
+    windows: ["%LOCALAPPDATA%/Yarn/Cache"]
+clean:
+  method: command
+  commands:
+    - [yarn, cache, clean]
+  fallback: trash
