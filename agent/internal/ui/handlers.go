@@ -138,6 +138,28 @@ func homeDir() string {
 	return h
 }
 
+// items lists every rule match from the last scan, safe ones first, so the
+// UI can show them all with checkboxes and explain the ones that were kept.
+func (s *Server) items(w http.ResponseWriter, r *http.Request) {
+	_, rep := s.snapshot()
+	out := []itemView{}
+	if rep != nil {
+		cfg, _ := config.Load()
+		all, _ := loadRules()
+		for _, it := range rep.Items { // already sorted largest first
+			if it.Eligible {
+				out = append(out, view(it, all, cfg.DeleteMode == config.DeletePermanent))
+			}
+		}
+		for _, it := range rep.Items {
+			if !it.Eligible {
+				out = append(out, view(it, all, cfg.DeleteMode == config.DeletePermanent))
+			}
+		}
+	}
+	writeJSON(w, http.StatusOK, map[string]any{"items": out})
+}
+
 func (s *Server) scan(w http.ResponseWriter, r *http.Request) {
 	var req struct {
 		Path string `json:"path"`

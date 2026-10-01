@@ -154,6 +154,13 @@ func TestUIFlow(t *testing.T) {
 		t.Fatalf("reveal outside tree: %d", st)
 	}
 
+	// The item list has every match with what cleaning would do.
+	var il struct{ Items []itemView }
+	call("GET", "/api/items", nil, &il)
+	if len(il.Items) != 1 || !il.Items[0].Eligible || il.Items[0].Action != "Moves to Trash" || il.Items[0].Path == "" {
+		t.Fatalf("items: %+v", il.Items)
+	}
+
 	// The dry run changes nothing.
 	var pv struct {
 		Items []struct{ ID, Action string }

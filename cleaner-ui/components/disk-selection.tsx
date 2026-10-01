@@ -120,5 +120,13 @@ export function useDiskSelection() {
     </>
   );
 
-  return { sel, selected, setSelected, toggle, openFolderPicker: () => setPicking(true), overlays };
+  return {
+    sel,
+    selected,
+    setSelected,
+    toggle,
+    openFolderPicker: () => setPicking(true),
+    previewCleanup: (ids: string[]) => setCleaning(ids),
+    overlays,
+  };
 }

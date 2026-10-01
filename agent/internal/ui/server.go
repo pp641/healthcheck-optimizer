@@ -105,6 +105,7 @@ func (s *Server) Handler() http.Handler {
 	}
 	api := func(pattern string, h http.HandlerFunc) { mux.Handle(pattern, s.guard(h)) }
 	api("GET /api/state", s.state)
+	api("GET /api/items", s.items)
 	api("POST /api/scan", s.scan)
 	api("GET /api/tree", s.treeLevel)
 	api("POST /api/preview", s.preview)
